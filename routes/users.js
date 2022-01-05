@@ -8,8 +8,16 @@ router.use(bp.json());
 
 
 /* GET users listing. */
-router.get('/', function (req, res, next) {
-  res.send('respond with a resource');
+router.get('/', authenticate.verifyOrdinaryUser, authenticate.verifyAdmin, function (req, res, next) {
+  User.find({}).then((users) => {
+    if (users) {
+      res.json(users);
+    }
+    else {
+      next(err);
+    }
+  })
+    .catch((err) => next(err));
 });
 
 router.post('/signup', function (req, res, next) {
