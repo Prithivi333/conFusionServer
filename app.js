@@ -8,6 +8,7 @@ var FileStore = require('session-file-store')(session);
 var passport=require('passport');
 var authenticate=require('./authenticate');
 var config=require('./config');
+var cors=require('cors');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -52,6 +53,7 @@ app.use(express.urlencoded({ extended: false }));
 
 
 app.use(passport.initialize());
+app.use(cors());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
